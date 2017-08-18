@@ -2,36 +2,39 @@
 include_once 'init.php';
 
 $response = new \response\Response();
-
-//$db = new \database\Database($response);
-
 $request = new \request\Request();
+$database = new \database\Database($response);
+$user = new \database\Users($database);
 
 switch ($request->getMethod()) {
 	case 'GET':
+		if (!isset($_GET['q'])) {
+			$response->badRequest("Missing method");
+		}
+		switch ($_GET['q']) {
+			case 'login':
+				if (!isset($_GET['email']) || !isset($_GET['password'])) {
+					$response->badRequest("Missing credentials");
+				}
+				$user->login($_GET['email'], $_GET['password']);
+				break;
+		}
+		break;
 	case 'POST':
 		if (!isset($_REQUEST['q'])) {
-			$response->notFound();
+			$response->badRequest("Missing method");
 		}
 		switch ($_REQUEST['q']) {
 			case 'createUser':
 				if (!isset($_REQUEST['firstname']) || !isset($_REQUEST['lastname']) || !isset($_REQUEST['email']) || !isset($_REQUEST['password'])) {
-					$response->notFound();
+					$response->badRequest("Missing user information");
 				}
-				$user = new \database\Users($response);
 				$user->create($_REQUEST['firstname'], $_REQUEST['lastname'], $_REQUEST['email'], $_REQUEST['password']);
 				break;
 		}
+		break;
 	case 'PUT':
 	case 'DELETE':
 	case 'PATCH':
 }
-
-
-
-
-//$response->setBody('TEST');
-$response->setStatusCode(\enum\StatusCodes::OK);
-
-echo $response->returnResponse();
 ?>

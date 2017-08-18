@@ -28,7 +28,14 @@ class Response {
 
 	public function notFound() {
 		self::setStatusCode(\enum\StatusCodes::NOT_FOUND);
-		self::returnResponse();
+		echo self::returnResponse();
+		exit;
+	}
+
+	public function badRequest($text) {
+		self::setStatusCode(\enum\StatusCodes::BAD_REQUEST);
+		self::setBody($text);
+		echo self::returnResponse();
 		exit;
 	}
 }

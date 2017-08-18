@@ -2,8 +2,8 @@
 namespace database;
 
 class Database {
-	protected $conn;
-	protected $response;
+	public $conn;
+	public $response;
 
 	public function __construct(&$response) {
 		$config = parse_ini_file('config.ini');
@@ -17,7 +17,9 @@ class Database {
 
 	private function createTables() {
 		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`users` 
-			( `id` INT NOT NULL AUTO_INCREMENT , `firstname` TEXT NOT NULL , `lastname` TEXT NOT NULL , `email` TEXT NOT NULL , `hash` TEXT NOT NULL , `role` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
+			( `id` INT NOT NULL AUTO_INCREMENT , `firstname` TEXT NOT NULL , `lastname` TEXT NOT NULL , `email` TEXT NOT NULL , `hash` TEXT NOT NULL , `role` INT NOT NULL , `image` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
+		$this->conn->query("CREATE TABLE `cosy`.`authTokens` 
+			( `userId` INT NOT NULL , `token` TEXT NOT NULL ) ENGINE = InnoDB");
 	}
 }
 ?>
