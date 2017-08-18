@@ -25,5 +25,11 @@ class Response {
 		}
 		return $this->body;
 	}
+
+	public function notFound() {
+		self::setStatusCode(\enum\StatusCodes::NOT_FOUND);
+		self::returnResponse();
+		exit;
+	}
 }
 ?>

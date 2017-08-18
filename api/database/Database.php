@@ -2,14 +2,22 @@
 namespace database;
 
 class Database {
-	public static $conn;
+	protected $conn;
+	protected $response;
 
-	public function __construct() {
+	public function __construct(&$response) {
 		$config = parse_ini_file('config.ini');
-		$conn = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
-		if(!$conn) {
-			die("DB-Connection failed!");
+		$this->conn = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['dbname']);
+		$this->response = $response;
+		if($this->conn === false) {
+			$response->notFound();
 		}
+		self::createTables();
+	}
+
+	private function createTables() {
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`users` 
+			( `id` INT NOT NULL AUTO_INCREMENT , `firstname` TEXT NOT NULL , `lastname` TEXT NOT NULL , `email` TEXT NOT NULL , `hash` TEXT NOT NULL , `role` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
 	}
 }
 ?>
