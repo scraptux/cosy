@@ -62,7 +62,7 @@ class Users {
 		}
 	}
 
-	public function fetchToken($userId) {
+	private function fetchToken($userId) {
 		$stmt = $this->db->conn->prepare("SELECT token FROM `authTokens` WHERE `authTokens`.userId = '".$userId."' LIMIT 1");
 		$stmt->execute();
 		$stmt->store_result();

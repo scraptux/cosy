@@ -4,6 +4,10 @@ namespace database;
 class Database {
 	public $conn;
 	public $response;
+	private $config;
+
+	public $user;
+	public $spotify;
 
 	public function __construct(&$response) {
 		$config = parse_ini_file('config.ini');
@@ -13,6 +17,15 @@ class Database {
 			$response->notFound();
 		}
 		self::createTables();
+		$this->config = $config;
+	}
+
+	public function initUser() {
+		$this->user = new \database\Users($this);
+	}
+
+	public function initSpotify() {
+		$this->spotify = new \database\Spotify($this->config['clientid'], $this->config['clientsecret'], $this);
 	}
 
 	private function createTables() {
