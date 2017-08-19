@@ -41,7 +41,7 @@ switch ($request->getMethod()) {
 				if (isset($_GET['country'])) {
 					$db->spotify->getArtistTopTracks($_GET['id'],$_GET['country']);
 				} else {
-					$db->spotify->getArtistTopTracks($_GET['id'],'en');
+					$db->spotify->getArtistTopTracks($_GET['id'],'us');
 				}
 				break;
 			case 'artistRelatedArtists':

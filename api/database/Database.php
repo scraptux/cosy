@@ -38,6 +38,8 @@ class Database {
 			( `id` INT NOT NULL AUTO_INCREMENT , `firstname` TEXT NOT NULL , `lastname` TEXT NOT NULL , `email` TEXT NOT NULL , `hash` TEXT NOT NULL , `role` INT NOT NULL , `image` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
 		$this->conn->query("CREATE TABLE `cosy`.`authTokens` 
 			( `userId` INT NOT NULL , `token` TEXT NOT NULL ) ENGINE = InnoDB");
+		$this->conn->query("CREATE TABLE `cosy`.`songs` 
+			( `id` TEXT NOT NULL , `video` TEXT NOT NULL ) ENGINE = InnoDB");
 	}
 }
 ?>

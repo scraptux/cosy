@@ -20,6 +20,10 @@ class Spotify {
 
 	public function getAlbum($id) {
 		$album = $this->api->getAlbum($id);
+		$t = new \database\Tracks($this->db);
+		foreach ($album->tracks->items as $track) {
+			$t->getTrack($track);
+		}
 		$this->returnResults($album);
 	}
 
@@ -35,6 +39,10 @@ class Spotify {
 
 	public function getArtistTopTracks($id, $country) {
 		$tracks = $this->api->getArtistTopTracks($id, ['country' => $country]);
+		$t = new \database\Tracks($this->db);
+		foreach ($tracks->tracks as $track) {
+			$t->getTrack($track);
+		}
 		$this->returnResults($tracks);
 	}
 
