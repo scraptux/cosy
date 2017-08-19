@@ -1,0 +1,7 @@
+{
+    "require": {
+        "google/apiclient": "^2.2",
+        "google/auth": "^1.0",
+        "jwilsson/spotify-web-api-php": "^2.0"
+    }
+}

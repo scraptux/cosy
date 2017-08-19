@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__.'/vendor/autoload.php';
 include_once 'init.php';
 
 $response = new \response\Response();
@@ -24,6 +25,31 @@ switch ($request->getMethod()) {
 				}
 				$db->initSpotify();
 				$db->spotify->getArtist($_GET['id']);
+				break;
+			case 'artistAlbums':
+				if (!isset($_GET['id'])) {
+					$response->badRequest("Missing artistId");
+				}
+				$db->initSpotify();
+				$db->spotify->getArtistAlbums($_GET['id']);
+				break;
+			case 'artistTopTracks':
+				if (!isset($_GET['id'])) {
+					$response->badRequest("Missing artistId");
+				}
+				$db->initSpotify();
+				if (isset($_GET['country'])) {
+					$db->spotify->getArtistTopTracks($_GET['id'],$_GET['country']);
+				} else {
+					$db->spotify->getArtistTopTracks($_GET['id'],'en');
+				}
+				break;
+			case 'artistRelatedArtists':
+				if (!isset($_GET['id'])) {
+					$response->badRequest("Missing artistId");
+				}
+				$db->initSpotify();
+				$db->spotify->getArtistRelatedArtists($_GET['id']);
 				break;
 			case 'login':
 				if (!isset($_GET['email']) || !isset($_GET['password'])) {

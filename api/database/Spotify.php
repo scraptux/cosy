@@ -28,6 +28,21 @@ class Spotify {
 		$this->returnResults($artist);
 	}
 
+	public function getArtistAlbums($id) {
+		$albums = $this->api->getArtistAlbums($id, ['limit' => 50]);
+		$this->returnResults($albums);
+	}
+
+	public function getArtistTopTracks($id, $country) {
+		$tracks = $this->api->getArtistTopTracks($id, ['country' => $country]);
+		$this->returnResults($tracks);
+	}
+
+	public function getArtistRelatedArtists($id) {
+		$artists = $this->api->getArtistRelatedArtists($id);
+		$this->returnResults($artists);
+	}
+
 	private function returnResults($arr) {
 		$this->db->response->setStatusCode(\enum\StatusCodes::OK);
 		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);

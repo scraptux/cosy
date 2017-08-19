@@ -8,6 +8,7 @@ class Database {
 
 	public $user;
 	public $spotify;
+	public $google;
 
 	public function __construct(&$response) {
 		$config = parse_ini_file('config.ini');
@@ -26,6 +27,10 @@ class Database {
 
 	public function initSpotify() {
 		$this->spotify = new \database\Spotify($this->config['clientid'], $this->config['clientsecret'], $this);
+	}
+
+	public function initGoogle() {
+		$this->google = new \database\Google($this->config['developerkey']);
 	}
 
 	private function createTables() {
