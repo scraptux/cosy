@@ -1,0 +1,25 @@
+<section id="left-panel">
+	<a href="#!/" class="logo">
+		<img src="assets/img/logo.png">
+	</a>
+	<div class="content">
+		<perfect-scrollbar class="scroller">
+			<div class="search-bar">
+				<input placeholder="Search..." ng-model="query" ng-enter="search(query)" type="text">
+			</div>
+			<div class="main-menu">
+				<a href="#!/top-50"><div class="menu-item" id="top-50">
+					<i class="material-icons md-light">whatshot</i>
+					Top 50
+				</div></a>
+			</div>
+		</perfect-scrollbar>
+	</div>
+	<div class="current-track" ng-show="!player.playing.new">
+		<img src="assets/img/album-no-image.png" ng-src="{{player.playing.track.album.images[player.playing.track.album.images.length-1].url}}">
+		<div class="info">
+			<div class="track-name">{{player.playing.track.name}}</div>
+			<div class="artist-name"><a ng-href="#!/artist/{{player.playing.track.artists[0].id}}">{{player.playing.track.artists[0].name}}</a></div>
+		</div>
+	</div>
+</section>

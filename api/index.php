@@ -2,6 +2,8 @@
 include_once __DIR__.'/vendor/autoload.php';
 include_once 'init.php';
 
+header("Access-Control-Allow-Origin: *");
+
 $response = new \response\Response();
 $request = new \request\Request();
 $db = new \database\Database($response);
@@ -51,12 +53,26 @@ switch ($request->getMethod()) {
 				$db->initSpotify();
 				$db->spotify->getArtistRelatedArtists($_GET['id']);
 				break;
+			case 'search':
+				if (!isset($_GET['p'])) {
+					$response->badRequest("Missing searchQuery[p]");
+				}
+				$db->initSpotify();
+				$db->spotify->search($_GET['p']);
+				break;
+			case 'topTracks':
+				$db->initSpotify();
+				$db->spotify->getTopTracks();
+				break;
 			case 'login':
 				if (!isset($_GET['email']) || !isset($_GET['password'])) {
 					$response->badRequest("Missing credentials");
 				}
 				$db->initUser();
 				$db->user->login($_GET['email'], $_GET['password']);
+				break;
+			default:
+				$response->badRequest("Unknown method");
 				break;
 		}
 		break;
@@ -71,6 +87,9 @@ switch ($request->getMethod()) {
 				}
 				$db->initUser();
 				$db->user->create($_REQUEST['firstname'], $_REQUEST['lastname'], $_REQUEST['email'], $_REQUEST['password']);
+				break;
+			default:
+				$response->badRequest("Unknown method");
 				break;
 		}
 		break;

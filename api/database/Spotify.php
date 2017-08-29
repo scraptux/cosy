@@ -51,6 +51,24 @@ class Spotify {
 		$this->returnResults($artists);
 	}
 
+	public function getTopTracks() {
+		$tracks = $this->api->getUserPlaylistTracks('spotifycharts', '37i9dQZEVXbMDoHDwVN2tF');
+		$t = new \database\Tracks($this->db);
+		foreach ($tracks->items as $track) {
+			$t->getTrack($track->track);
+		}
+		$this->returnResults($tracks);
+	}
+
+	public function search($query) {
+		$res = $this->api->search($query, 'artist,album,track');
+		$t = new \database\Tracks($this->db);
+		foreach ($res->tracks->items as $track) {
+			$t->getTrack($track);
+		}
+		$this->returnResults($res);
+	}
+
 	private function returnResults($arr) {
 		$this->db->response->setStatusCode(\enum\StatusCodes::OK);
 		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);

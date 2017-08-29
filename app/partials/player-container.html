@@ -1,0 +1,26 @@
+<section class="player-container">
+	<div class="buttons">
+		<i class="prev material-icons md-light md-24" ng-click="player.prev()">skip_previous</i>
+		<i class="toggle-play material-icons md-light md-48" ng-click="player.togglePlay()">play_arrow</i>
+		<i class="next material-icons md-light md-24" ng-click="player.next()">skip_next</i>
+	</div>
+	<div class="progress-container">
+		<div class="elapsed-time">0:00</div>
+		<div ng-click="seekVideo($event)" class="progress-bar">
+			<div class="elapsed"></div>
+			<div class="progress"></div>
+		</div>
+		<div class="track-length">0:00</div>
+	</div>
+	<div class="buttons right">
+		<i class="shuffle material-icons md-light md-18" ng-class="{'shuffling': player.playing.shuffling}" ng-click="player.toggleShuffle()">shuffle</i>
+		<i class="repeat material-icons md-light md-18" ng-class="{'repeating': player.playing.repeating, 'repeating-one': player.playing.repeatingOne}" ng-click="player.toggleRepeat()">repeat</i>
+		<div class="volume-container">
+			<i ng-click="muteVolume()" class="volume material-icons md-light md-18">volume_up</i>
+			<div ng-click="changeVolume($event)" class="volume-bar">
+				<div class="elapsed"></div>
+				<div class="progress"></div>
+			</div>
+		</div>
+	</div>
+</section>

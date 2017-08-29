@@ -1,0 +1,90 @@
+<nav>
+	<h1>Search results for "{{query}}"</h1>
+</nav>
+
+<section class="artists-albums" ng-show="artistsCount > 0 || albumsCount > 0">
+<div class="items-panel" ng-show="artistsCount > 0">
+    <div class="header">
+        <div class="name">Artists</div>
+    </div>
+    <div class="artists">
+        <div class="artist" ng-repeat="artist in artists | limitTo:8">
+            <a ng-href="#!/artist/{{artist.id}}">
+            <div class="image">
+                <img ng-src="{{artist.images[1].url}}" src="assets/img/album-no-image.png">
+            </div>
+            <div class="info">
+                <div class="name">{{artist.name}}</div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="items-panel" ng-show="albumsCount > 0">
+    <div class="header">
+        <div class="name">Albums</div>
+    </div>
+    <div class="artists">
+        <div class="artist" ng-repeat="album in albums | limitTo:8">
+            <a ng-href="#!/album/{{album.id}}">
+            <div class="image">
+                <img ng-src="{{album.images[1].url}}" src="assets/img/album-no-image.png">
+            </div>
+            <div class="info">
+                <div class="name">{{album.name}}</div>
+                <a ng-href="#!/artist/{{album.artists[0].id}}" class="artist-name">{{album.artists[0].name}}</a>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+</section>
+
+<div id="album-page" class="home-page">
+    <div class="flex-table album-table" ng-show="tracksCount > 0">
+        <div class="flex-table-row flex-table-header">
+            <div class="flex-table-row-item track-number">#</div>
+            <div class="flex-table-row-item add-remove-track"></div>
+            <div class="flex-table-row-item track-name">song</div>
+            <div class="flex-table-row-item artist-name">artist</div>
+            <div class="flex-table-row-item album-name">album</div>
+            <div class="flex-table-row-item track-duration">
+                <i class="material-icons md-light md-18">access_time</i>
+            </div>
+            <div class="flex-table-row-item popularity">
+                <i class="material-icons md-light md-18">thumb_up</i>
+            </div>
+        </div>
+        <div class="flex-table-row" ng-repeat="track in tracks" ng-class="{'playing': track.id == player.playing.track.id && player.playing.playing}">
+            <div class="flex-table-row-item track-number">
+                <span class="index">{{track.rank}}</span>
+                <div class="play-icon" ng-click="player.toggleTrack(track)">
+                    <i class="material-icons md-light md-18">play_arrow</i>
+                </div>
+                <div class="pause-icon" ng-click="player.toggleTrack(track)">
+                    <i class="material-icons md-light md-18">pause</i>
+                </div>
+            </div>
+            <div class="flex-table-row-item add-remove-track" ng-click="player.queueAdd(track)">
+                <i class="material-icons md-light md-18">add</i>
+            </div>
+            <div class="flex-table-row-item track-name">{{track.name}}</div>
+            <div class="flex-table-row-item artist-name">
+                <div class="artists">
+                    <div class="artist" ng-repeat="artist in track.artists">
+                        <span ng-if="!$first">,</span>
+                        <a ng-href="#!/artist/{{artist.id}}">{{artist.name}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-table-row-item album-name"><a ng-href="#!/album/{{track.album.id}}">{{track.album.name}}</a></div>
+            <div class="flex-table-row-item track-duration">{{ player.convertMs(track.duration_ms) }}</div>
+            <div class="flex-table-row-item popularity">
+                <div class="popularity-widget">
+                    <div class="popularity-fill" ng-style="{'width':track.popularity+'%'}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span ng-hide="tracksCount > 0 && artistsCount > 0 && albumsCount > 0">No results found.</span>
+</div>

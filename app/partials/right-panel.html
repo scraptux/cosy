@@ -1,0 +1,27 @@
+<section id="right-panel" class="queue">
+	<perfect-scrollbar class="scroller">
+	<div class="track" ng-repeat="track in player.queue" ng-class="{'playing': track.id == player.playing.track.id && player.playing.playing}">
+		<div class="image">
+			<img src="assets/img/album-no-image.png" ng-src="{{track.album.images[track.album.images.length-1].url}}">
+			<i class="indicator material-icons md-light" ng-click="player.toggleTrack(track)">play_arrow</i>
+		</div>
+		<div class="info">
+			<div class="track-name">{{track.name}}</div>
+			<div class="artist-name"><a href="#!/artist/{{track.artists[0].id}}">{{track.artists[0].name}}</a></div>
+		</div>
+		<i class="remove material-icons md-light md-18" ng-click="player.queueDel(track)">delete</i>
+	</div>
+	</perfect-scrollbar>
+</section>
+<div id="queue-controls" ng-show="player.queue.length > 0">
+	<div class="clear" ng-click="player.clearQueue()">
+		<i class="material-icons md-light">delete</i>
+	</div>
+	<div class="save" ng-click="saveToPlaylist()">
+		<i class="material-icons md-light">playlist_add</i>
+	</div>
+	<div class="share">
+		<i class="material-icons md-light">share</i>
+	</div>
+</div>
+<div id="player"></div>

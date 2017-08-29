@@ -1,0 +1,42 @@
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>COSY</title>
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon-300x300.png"/> 
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/desktop.css"/>
+	<link href="assets/libs/ps/perfect-scrollbar.min.css" rel="stylesheet"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js" type="text/javascript"></script>
+	<script src="assets/libs/ps/perfect-scrollbar.jquery.min.js"></script>
+	<script src="assets/libs/ps/angular-perfect-scrollbar.min.js"></script>
+	<script src="app/app.module.js" type="text/javascript"></script>
+	<script src="app/app.routes.js" type="text/javascript"></script>
+	<script src="app/app.service.js" type="text/javascript"></script>
+	<script src="app/app.controller.js" type="text/javascript"></script>
+	<script src="assets/js/core.js" type="text/javascript"></script>
+</head>
+<body ng-app="app" ng-controller="appController">
+
+<section class="page-container">
+	<ng-include src="'app/partials/left-panel.html'"></ng-include>
+
+	<div class="middle-view">
+		<perfect-scrollbar class="scroller">
+		<div id="loading">
+			<svg class="circular">
+    			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+  			</svg>
+		</div>
+		<ng-view></ng-view>
+		</perfect-scrollbar>
+	</div>
+
+	<ng-include src="'app/partials/right-panel.html'"></ng-include>
+</section>
+
+<ng-include src="'app/partials/player-container.html'"></ng-include>
+
+<body>
+</html>
