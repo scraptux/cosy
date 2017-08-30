@@ -81,14 +81,6 @@ function updateVolumeBar() {
 }
 
 function onPlayerReady() {
-    //service = $('body').injector().get('playerService');
-    //if (service.playing.repeatingOne) {
-        //$('.repeat.repeating-one').html('repeat_one');
-    //}
-    //player.setVolume(service.volume);
-    //player.cueVideoById(service.playing.identifier);
-    //$('.track-length').text(formatTime(player.getDuration()));
-    //updateVolumeBar();
     service = $('body').injector().get('playerService');
     if (localStorage.getItem("volume") !== null) {
         player.setVolume(localStorage.getItem("volume"));

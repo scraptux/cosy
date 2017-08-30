@@ -10,7 +10,13 @@ angular.module("app").service("playerService", [function () {
     this.originalQueue = [];
 
     this.queueAdd = function(track) {
-        if (this.queue.indexOf(track) !== -1) {
+        var i;
+        for (i = 0; i < this.queue.length; i++) {
+            if (this.queue[i].id == track.id) {
+                break;
+            }
+        }
+        if (i < this.queue.length) {
             return;
         }
         this.queue.push(track);
@@ -49,7 +55,13 @@ angular.module("app").service("playerService", [function () {
             this.playing.playing = false;
             this.playing.track = track;
             this.playing.new = false;
-            if (this.queue.indexOf(track) == -1) {
+            var i;
+            for (i = 0; i < this.queue.length; i++) {
+                if (this.queue[i].id == track.id) {
+                    break;
+                }
+            }
+            if (i >= this.queue.length || i < 0) {
                 this.clearQueue();
                 this.queueAdd(track);
             }

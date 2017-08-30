@@ -1,5 +1,16 @@
 angular.module('app').config(function($routeProvider) {
 	$routeProvider
+        .when('/album/:id', {
+            templateUrl: 'app/templates/album.html',
+            controller: 'albumController',
+            resolve: {
+                results: function($http, $route) {
+                    return $.get('api/?q=album&id='+$route.current.params.id, function(data) {
+                        return data;
+                    })
+                }
+            }
+        })
 		.when('/home', {
 			templateUrl: 'app/templates/home.html',
 			controller: 'homeController'

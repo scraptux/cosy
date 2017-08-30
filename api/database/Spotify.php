@@ -23,6 +23,9 @@ class Spotify {
 		$t = new \database\Tracks($this->db);
 		foreach ($album->tracks->items as $track) {
 			$t->getTrack($track);
+			$track->album->id = $album->id;
+			$track->album->name = $album->name;
+			$track->album->images = $album->images;
 		}
 		$this->returnResults($album);
 	}
