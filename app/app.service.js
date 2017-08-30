@@ -15,6 +15,7 @@ angular.module("app").service("playerService", [function () {
         }
         this.queue.push(track);
         this.originalQueue.push(track);
+        localStorage.queue = JSON.stringify(this.originalQueue);
     }
 
     this.queueDel = function(track) {
@@ -22,11 +23,13 @@ angular.module("app").service("playerService", [function () {
         this.queue.splice(index,1);
         index = this.originalQueue.indexOf(track);
         this.originalQueue.splice(index,1);
+        localStorage.queue = JSON.stringify(this.originalQueue);
     }
 
     this.clearQueue = function() {
         this.queue = [];
         this.originalQueue = [];
+        localStorage.queue = JSON.stringify([]);
     }
 
     this.togglePlay = function() {
@@ -51,6 +54,7 @@ angular.module("app").service("playerService", [function () {
                 this.queueAdd(track);
             }
         }
+        localStorage.playing = JSON.stringify(this.playing);
 	}
 
     this.next = function() {
@@ -94,6 +98,7 @@ angular.module("app").service("playerService", [function () {
             $('.repeat.repeating-one').html('repeat');
             this.playing.repeatingOne = false;
         }
+        localStorage.playing = JSON.stringify(this.playing);
     }
 
     this.toggleShuffle = function() {
@@ -110,6 +115,7 @@ angular.module("app").service("playerService", [function () {
             this.queue = this.originalQueue.concat();
             this.originalQueue = [];
         }
+        localStorage.playing = JSON.stringify(this.playing);
     }
 
     this.convertMs = function(ms) {

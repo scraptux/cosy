@@ -90,5 +90,11 @@ function onPlayerReady() {
     //$('.track-length').text(formatTime(player.getDuration()));
     //updateVolumeBar();
     service = $('body').injector().get('playerService');
-    setTimeout(function(){updateVolumeBar();}, 100);
+    if (localStorage.getItem("volume") !== null) {
+        player.setVolume(localStorage.getItem("volume"));
+    }
+    setTimeout(function(){updateVolumeBar();}, 200);
+    if (localStorage.getItem("playing") !== null) {
+        player.cueVideoById(JSON.parse(localStorage.getItem("playing")).track.video);
+    }
 }

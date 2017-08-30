@@ -32,4 +32,13 @@ angular.module('app').directive('ngEnter', function () {
     });
     $rootScope.$on('$routeChangeError', function () {
     });
+
+    if (localStorage.getItem("playing") !== null) {
+        playerService.playing = JSON.parse(localStorage.getItem("playing"));
+        playerService.queue = JSON.parse(localStorage.getItem("queue"));
+        playerService.originalQueue = JSON.parse(localStorage.getItem("queue"));
+        playerService.playing.playing = false;
+        playerService.playing.shuffling = false;
+        //playerService.volume = localStorage.getItem("volume");
+    }
 });
