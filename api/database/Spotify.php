@@ -35,8 +35,8 @@ class Spotify {
 		$this->returnResults($artist);
 	}
 
-	public function getArtistAlbums($id) {
-		$albums = $this->api->getArtistAlbums($id, ['limit' => 50]);
+	public function getArtistAlbums($id, $country) {
+		$albums = $this->api->getArtistAlbums($id, ['limit' => 50, 'country' => $country, 'album_type' => 'album,single']);
 		$this->returnResults($albums);
 	}
 

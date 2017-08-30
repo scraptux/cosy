@@ -1244,6 +1244,8 @@ nav > h1 {
 	display: -ms-flexbox;
 	display: flex;
 	align-items: center;
+	width: 100%;
+	cursor: pointer;
 }
 
 .info-col .similar-artists .artist img {

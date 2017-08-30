@@ -11,6 +11,32 @@ angular.module('app').config(function($routeProvider) {
                 }
             }
         })
+        .when('/artist/:id', {
+            templateUrl: 'app/templates/artist.html',
+            controller: 'artistController',
+            resolve: {
+                artist: function($http, $route) {
+                    return $.get('api/?q=artist&id='+$route.current.params.id, function(data) {
+                        return data;
+                    })
+                },
+                albums: function($http, $route) {
+                    return $.get('api/?q=artistAlbums&id='+$route.current.params.id, function(data) {
+                        return data;
+                    })
+                },
+                tracks: function($http, $route) {
+                    return $.get('api/?q=artistTopTracks&id='+$route.current.params.id, function(data) {
+                        return data;
+                    })
+                },
+                related: function($http, $route) {
+                    return $.get('api/?q=artistRelatedArtists&id='+$route.current.params.id, function(data) {
+                        return data;
+                    })
+                }
+            }
+        })
 		.when('/home', {
 			templateUrl: 'app/templates/home.html',
 			controller: 'homeController'

@@ -33,7 +33,11 @@ switch ($request->getMethod()) {
 					$response->badRequest("Missing artistId");
 				}
 				$db->initSpotify();
-				$db->spotify->getArtistAlbums($_GET['id']);
+				if (isset($_GET['country'])) {
+					$db->spotify->getArtistAlbums($_GET['id'],$_GET['country']);
+				} else {
+					$db->spotify->getArtistAlbums($_GET['id'],'us');
+				}
 				break;
 			case 'artistTopTracks':
 				if (!isset($_GET['id'])) {

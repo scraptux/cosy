@@ -30,12 +30,18 @@ angular.module('app').controller('appController', ['$scope', 'playerService', '$
 
 angular.module('app').controller('albumController', ['$scope', 'results', function($scope, results) {
     $scope.album = results;
-    console.log(results);
     $scope.totalDuration = 0;
     for (var i = 0; i < $scope.album.tracks.items.length; i++) {
         $scope.totalDuration += $scope.album.tracks.items[i].duration_ms;
         $scope.album.tracks.items[i].rank = i+1;
     }
+}]);
+
+angular.module('app').controller('artistController', ['$scope', 'artist', 'albums', 'tracks', 'related', function($scope, artist, albums, tracks, related) {
+    $scope.artist = artist;
+    $scope.tracks = tracks.tracks;
+    $scope.artists = related.artists;
+    $scope.albums = albums.items;
 }]);
 
 angular.module('app').controller('searchController', ['$scope', 'results', '$routeParams', function($scope, results, $routeParams) {

@@ -1,0 +1,82 @@
+<div class="artist-header">
+	<div class="header-overlay">
+		<div class="artist-image">
+			<img ng-src="{{artist.images[1].url}}" src="assets/img/artist-no-image.jpg">
+		</div>
+		<div class="artist-info">
+			<h1>{{artist.name}}</h1>
+			<div class="genres">
+				<div class="genre" ng-repeat="genre in artist.genres">{{genre}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="navigation">
+	<div class="nav-item active">Overview</div>
+	<div class="nav-item">About (not working)</div>
+</div>
+
+<div class="artist-body">
+	<div id="overview" class="tab">
+		<div class="media-col">
+			<section class="top-tracks">
+				<h4>Popular Songs</h4>
+				<div class="flex-table album-table">
+					<div class="flex-table-row" ng-repeat="track in tracks" ng-class="{'playing': track.id == player.playing.track.id && player.playing.playing}">
+						<div class="flex-table-row-item track-image">
+							<img ng-src="{{track.album.images[track.album.images.length-1].url}}" src="assets/img/album-no-image.png">
+                			<div class="play-icon" ng-click="player.toggleTrack(track)">
+                    			<i class="material-icons md-light md-24">play_arrow</i>
+                			</div>
+                			<div class="pause-icon" ng-click="player.toggleTrack(track)">
+                   				<i class="material-icons md-light md-24">pause</i>
+                			</div>
+						</div>
+						<div class="flex-table-row-item add-remove-track" ng-click="player.queueAdd(track)">
+							<i class="material-icons md-light md-18">add</i>
+						</div>
+						<div class="flex-table-row-item track-name">
+							<div class="ellipses">{{track.name}}</div>
+						</div>
+						<div class="flex-table-row-item album-name">
+							<div class="ellipses"><a ng-href="#!/album/{{track.album.id}}">{{track.album.name}}</a></div>
+						</div>
+						<div class="flex-table-row-item"></div>
+						<div class="flex-table-row-item">{{player.convertMs(track.duration_ms)}}</div>
+					</div>
+				</div>
+			</section>
+			<section class="artists-albums">
+				<div class="items-panel" id="artist-page">
+    				<div class="header">
+       					<h4>Albums</h4>
+    				</div>
+    				<div class="albums">
+        				<div class="album" ng-repeat="album in albums">
+        					<a ng-href="#!/album/{{album.id}}">
+            				<div class="image">
+                				<img ng-src="{{album.images[1].url}}" src="assets/img/album-no-image.png">
+            				</div>
+            				<div class="info">
+                				<div class="name">{{album.name}}</div>
+            				</div>
+            				</a>
+        				</div>
+    				</div>
+				</div>
+			</section>
+		</div>
+		<div class="info-col">
+			<div class="similar-artists">
+				<h4>Similar Artists</h4>
+				<div class="artist" ng-repeat="artist in artists">
+					<a ng-href="#!/artist/{{artist.id}}">
+					<img ng-src="{{artist.images[artist.images.length-1].url}}" src="assets/img/artist-no-image.jpg">
+					<div class="name">{{artist.name}}</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
