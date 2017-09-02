@@ -136,3 +136,33 @@ angular.module("app").service("playerService", [function () {
         return m + ":" + (s < 10 ? '0' : '') + s;
     };
 }]);
+
+angular.module("app").service("authService", ['$window', function ($window) {
+    this.user;
+
+    this.getUser = function () {
+        if (!$.isEmptyObject(this.user)) {
+            return true;
+        } else if (localStorage.getItem("token") === null) {
+            return false;
+        } else {
+            this.user = $.ajax({
+                type:"POST",
+                url:"api/",
+                data:{
+                    'q':'getUser',
+                    'token':localStorage.getItem("token")
+                },
+                success: function(response) {
+                    return response;
+                },
+                error: function() {
+                    localStorage.removeItem("token");
+                },
+                async: false
+            }).responseJSON;
+            return true;
+        }
+        return false;
+    }
+}]);

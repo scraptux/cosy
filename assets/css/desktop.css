@@ -392,6 +392,10 @@ button {
 .current-user > .username {
 	padding-top: 12px;
 	float: left;
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 17px;
 }
 
 .current-user > .logout {
@@ -1095,6 +1099,7 @@ nav > h1 {
 
 .artist-header .artist-image {
     height: 200px;
+    width: 200px;
     border-radius: 50%;
     margin: 20px 0 0 40px;
     overflow: hidden;
@@ -1469,6 +1474,17 @@ button.primary {
 	width: 100%;
 	border-radius: 5px;
 	color: #cfd8dc;
+    outline:none;
+}
+
+button.secondary {
+	background-color: #3d5059;
+	border: none;
+	padding: 5px;
+	width: 100%;
+	border-radius: 5px;
+	color: #cfd8dc;
+    outline:none;
 }
 
 figure.album {

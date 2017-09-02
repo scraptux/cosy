@@ -62,6 +62,44 @@ class Users {
 		}
 	}
 
+	public function getUser() {
+		$userId = self::token2userId();
+		error_log($userId);
+		$stmt = $this->db->conn->prepare("SELECT email, firstname, lastname, image FROM `users` WHERE `users`.id = '".$userId."' LIMIT 1");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($email, $firstname, $lastname, $img);
+		$stmt->fetch();
+		if ($stmt->num_rows <= 0) {
+			$this->db->response->unauthorized("No token provided");
+		}
+		$this->db->response->setStatusCode(\enum\StatusCodes::OK);
+		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);
+		$this->db->response->setBody(json_encode(array('id' => $userId,
+			'email' => $email,
+			'firstname' => $firstname,
+			'lastname' => $lastname,
+			'img' => $img
+		)));
+		echo $this->db->response->returnResponse();
+	}
+
+	private function token2userId() {
+		if (isset($_REQUEST['token'])) {
+			$stmt = $this->db->conn->prepare("SELECT userId FROM `authTokens` WHERE `authTokens`.token = '".$_REQUEST['token']."' LIMIT 1");
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->bind_result($userId);
+			$stmt->fetch();
+			if ($stmt->num_rows <= 0) {
+				$this->db->response->unauthorized("No token provided");
+			}
+		} else {
+			$this->db->response->unauthorized("You need to login first");
+		}
+		return $userId;
+	}
+
 	private function fetchToken($userId) {
 		$stmt = $this->db->conn->prepare("SELECT token FROM `authTokens` WHERE `authTokens`.userId = '".$userId."' LIMIT 1");
 		$stmt->execute();

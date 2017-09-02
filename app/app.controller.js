@@ -1,5 +1,10 @@
-angular.module('app').controller('appController', ['$scope', 'playerService', '$window', function($scope, playerService, $window) {
+angular.module('app').controller('appController', ['$scope', 'playerService', 'authService', '$window', function($scope, playerService, authService, $window) {
     $scope.player = playerService;
+    $scope.auth = authService;
+
+    $scope.route = function(destination) {
+        $window.location.href = "#!/"+destination;
+    }
 
     $scope.seekVideo = function(e) {
         var newTime = player.getDuration() * (e.offsetX / $(e.currentTarget).width());
@@ -26,6 +31,11 @@ angular.module('app').controller('appController', ['$scope', 'playerService', '$
     $scope.search = function(query) {
         $window.location.href = '#!/search/'+query;
     }
+
+    $scope.logout = function() {
+        localStorage.removeItem("token");
+        authService.user = null;
+    }
 }]);
 
 angular.module('app').controller('albumController', ['$scope', 'results', function($scope, results) {
@@ -48,8 +58,11 @@ angular.module('app').controller('loginController', ['$scope', '$window', functi
     $scope.email = "";
     $scope.pass = "";
 
+    if (localStorage.getItem("token") !== null) {
+        $window.location.href = "#!/";
+    }
+
     $scope.login = function() {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if ($scope.pass.length > 0 && $scope.email.length > 0) {
             $.post("api/", {
                 'q':'login',

@@ -100,6 +100,10 @@ switch ($request->getMethod()) {
 				$db->initUser();
 				$db->user->login($_REQUEST['email'], $_REQUEST['password']);
 				break;
+			case 'getUser':
+				$db->initUser();
+				$db->user->getUser();
+				break;
 			default:
 				$response->badRequest("Unknown method");
 				break;

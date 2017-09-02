@@ -38,5 +38,12 @@ class Response {
 		echo self::returnResponse();
 		exit;
 	}
+
+	public function unauthorized($text) {
+		self::setStatusCode(\enum\StatusCodes::UNAUTHORIZED);
+		self::setBody($text);
+		echo self::returnResponse();
+		exit;
+	}
 }
 ?>

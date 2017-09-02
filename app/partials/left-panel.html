@@ -17,6 +17,18 @@
 					New Releases
 				</div></a>
 			</div>
+			<div class="divider"></div>
+			<div class="login-btns" ng-hide="auth.getUser()">
+				<button class="primary login" ng-click="route('login')">Login</button>
+				<button class="secondary register" ng-click="route('register')">Register</button>
+			</div>
+			<div class="current-user" ng-show="auth.getUser()">
+				<img src="assets/img/avatars/male.png" ng-src="{{auth.user.img}}">
+				<div class="username">{{auth.user.firstname}} {{auth.user.lastname}}</div>
+				<div class="logout" ng-click="logout()">
+					<i class="material-icons md-light md-18">power_settings_new</i>
+				</div>
+			</div>
 		</perfect-scrollbar>
 	</div>
 	<div class="current-track" ng-show="!player.playing.new">
