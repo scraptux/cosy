@@ -86,12 +86,24 @@ switch ($request->getMethod()) {
 			$response->badRequest("Missing method");
 		}
 		switch ($_REQUEST['q']) {
+			case 'addPlaylistSongs':
+				$db->initPlaylist();
+				$db->playlist->addSongs();
+				break;
+			case 'createPlaylist':
+				$db->initPlaylist();
+				$db->playlist->createPlaylist();
+				break;
 			case 'createUser':
 				if (!isset($_REQUEST['firstname']) || !isset($_REQUEST['lastname']) || !isset($_REQUEST['email']) || !isset($_REQUEST['password'])) {
 					$response->badRequest("Missing user information");
 				}
 				$db->initUser();
 				$db->user->create($_REQUEST['firstname'], $_REQUEST['lastname'], $_REQUEST['email'], $_REQUEST['password']);
+				break;
+			case 'getPlaylist':
+				$db->initPlaylist();
+				$db->playlist->getPlaylist();
 				break;
 			case 'login':
 				if (!isset($_REQUEST['email']) || !isset($_REQUEST['password'])) {

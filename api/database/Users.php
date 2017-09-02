@@ -64,7 +64,6 @@ class Users {
 
 	public function getUser() {
 		$userId = self::token2userId();
-		error_log($userId);
 		$stmt = $this->db->conn->prepare("SELECT email, firstname, lastname, image FROM `users` WHERE `users`.id = '".$userId."' LIMIT 1");
 		$stmt->execute();
 		$stmt->store_result();
@@ -84,7 +83,7 @@ class Users {
 		echo $this->db->response->returnResponse();
 	}
 
-	private function token2userId() {
+	public function token2userId() {
 		if (isset($_REQUEST['token'])) {
 			$stmt = $this->db->conn->prepare("SELECT userId FROM `authTokens` WHERE `authTokens`.token = '".$_REQUEST['token']."' LIMIT 1");
 			$stmt->execute();

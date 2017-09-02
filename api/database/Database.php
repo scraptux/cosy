@@ -9,6 +9,7 @@ class Database {
 	public $user;
 	public $spotify;
 	public $google;
+	public $playlist;
 
 	public function __construct(&$response) {
 		$config = parse_ini_file('config.ini');
@@ -33,13 +34,21 @@ class Database {
 		$this->google = new \database\Google($this->config['developerkey']);
 	}
 
+	public function initPlaylist() {
+		$this->playlist = new \database\Playlist($this);
+	}
+
 	private function createTables() {
 		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`users` 
 			( `id` INT NOT NULL AUTO_INCREMENT , `firstname` TEXT NOT NULL , `lastname` TEXT NOT NULL , `email` TEXT NOT NULL , `hash` TEXT NOT NULL , `role` INT NOT NULL , `image` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
-		$this->conn->query("CREATE TABLE `cosy`.`authTokens` 
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`authTokens` 
 			( `userId` INT NOT NULL , `token` TEXT NOT NULL ) ENGINE = InnoDB");
-		$this->conn->query("CREATE TABLE `cosy`.`songs` 
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`songs` 
 			( `id` TEXT NOT NULL , `video` TEXT NOT NULL ) ENGINE = InnoDB");
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`playlists` 
+			( `id` INT NOT NULL AUTO_INCREMENT , `ownerId` INT NOT NULL , `name` TEXT NOT NULL , `private` BOOLEAN NOT NULL DEFAULT TRUE , PRIMARY KEY (`id`)) ENGINE = InnoDB");
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`playlistSongs` 
+			( `playlistId` INT NOT NULL , `songId` TEXT NOT NULL , `pos` INT NOT NULL ) ENGINE = InnoDB");
 	}
 }
 ?>

@@ -36,6 +36,46 @@ angular.module('app').controller('appController', ['$scope', 'playerService', 'a
         localStorage.removeItem("token");
         authService.user = null;
     }
+
+    $scope.saveToPlaylist = function() {
+        var uris = [];
+        for (var i = 0; i < $scope.player.queue.length; i++) {
+            uris.push($scope.player.queue[i].id);
+        }
+        var name = prompt("Please enter the playlist's name:", "New Playlist");
+        $.ajax({
+                type:"POST",
+                url:"api/",
+                data:{
+                    'q':'createPlaylist',
+                    'token':localStorage.getItem("token"),
+                    'name':name
+                },
+                success: function(response) {
+                    $.ajax({
+                        type:"POST",
+                        url:"api/",
+                        data:{
+                            'q':'addPlaylistSongs',
+                            'token':localStorage.getItem("token"),
+                            'playlistId':response.id,
+                            'songs':uris
+                        },
+                        success: function(response) {
+                            $window.location.href = "#!/playlist/"+response.id;
+                        },
+                        error: function() {
+                            alert("An error occured!");
+                        },
+                        async: false
+                    });
+                },
+                error: function() {
+                    alert("An error occured!");
+                },
+                async: false
+            });
+    }
 }]);
 
 angular.module('app').controller('albumController', ['$scope', 'results', function($scope, results) {

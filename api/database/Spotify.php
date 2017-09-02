@@ -68,6 +68,15 @@ class Spotify {
 		$this->returnResults($tracks);
 	}
 
+	public function getTracks(&$arr) {
+		$tracks = $this->api->getTracks($arr);
+		$t = new \database\Tracks($this->db);
+		foreach ($tracks->tracks as $track) {
+			$t->getTrack($track->track);
+		}
+		$this->returnResults($tracks);
+	}
+
 	public function search($query) {
 		$res = $this->api->search($query, 'artist,album,track');
 		$t = new \database\Tracks($this->db);
