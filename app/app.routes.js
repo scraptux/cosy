@@ -41,6 +41,10 @@ angular.module('app').config(function($routeProvider) {
 			templateUrl: 'app/templates/home.html',
 			controller: 'homeController'
 		})
+        .when('/login', {
+            templateUrl: 'app/templates/login.html',
+            controller: 'loginController'
+        })
         .when('/new-releases', {
             templateUrl: 'app/templates/new-releases.html',
             controller: 'newReleasesController',

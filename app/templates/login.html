@@ -1,0 +1,19 @@
+<div id="login-page">
+	<div class="wrapper">
+		<a href="#!/" class="logo">
+			<img src="assets/img/logo.png">
+		</a>
+		<div class="form">
+			<div class="email">
+				<input placeholder="Email" type="text" ng-model="email" ng-change="checkMail(email)" ng-enter="login()">
+			</div>
+			<div class="password">
+				<input placeholder="Password" type="password" ng-model="pass" ng-change="checkPass(pass)" ng-enter="login()">
+			</div>
+			<div class="info"></div>
+			<div class="login">
+				<button class="primary" ng-click="login()">Login</button>
+			</div>
+		</div>
+	</div>
+</div>

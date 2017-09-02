@@ -44,6 +44,27 @@ angular.module('app').controller('artistController', ['$scope', 'artist', 'album
     $scope.albums = albums.items;
 }]);
 
+angular.module('app').controller('loginController', ['$scope', '$window', function($scope, $window) {
+    $scope.email = "";
+    $scope.pass = "";
+
+    $scope.login = function() {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if ($scope.pass.length > 0 && $scope.email.length > 0) {
+            $.post("api/", {
+                'q':'login',
+                'email':$scope.email,
+                'password':$scope.pass
+            }, function(data) {
+                localStorage.token = data.token;
+                $window.location.href = "#!/";
+            }).fail(function(response) {
+                $('#login-page .form .info').text(response.responseText);
+            });
+        }
+    }
+}]);
+
 angular.module('app').controller('newReleasesController', ['$scope', 'results', function($scope, results) {
     $('.main-menu .menu-item#new-releases').addClass('active');
     $scope.albums = results.albums;

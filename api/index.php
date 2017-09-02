@@ -76,13 +76,6 @@ switch ($request->getMethod()) {
 				$db->initSpotify();
 				$db->spotify->getTopTracks();
 				break;
-			case 'login':
-				if (!isset($_GET['email']) || !isset($_GET['password'])) {
-					$response->badRequest("Missing credentials");
-				}
-				$db->initUser();
-				$db->user->login($_GET['email'], $_GET['password']);
-				break;
 			default:
 				$response->badRequest("Unknown method");
 				break;
@@ -99,6 +92,13 @@ switch ($request->getMethod()) {
 				}
 				$db->initUser();
 				$db->user->create($_REQUEST['firstname'], $_REQUEST['lastname'], $_REQUEST['email'], $_REQUEST['password']);
+				break;
+			case 'login':
+				if (!isset($_REQUEST['email']) || !isset($_REQUEST['password'])) {
+					$response->badRequest("Missing credentials");
+				}
+				$db->initUser();
+				$db->user->login($_REQUEST['email'], $_REQUEST['password']);
 				break;
 			default:
 				$response->badRequest("Unknown method");
