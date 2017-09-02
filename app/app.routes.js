@@ -41,6 +41,17 @@ angular.module('app').config(function($routeProvider) {
 			templateUrl: 'app/templates/home.html',
 			controller: 'homeController'
 		})
+        .when('/new-releases', {
+            templateUrl: 'app/templates/new-releases.html',
+            controller: 'newReleasesController',
+            resolve: {
+                results: function($http, $route) {
+                    return $.get('api/?q=newReleases', function(data) {
+                        return data;
+                    })
+                }
+            }
+        })
         .when('/search/:query', {
             templateUrl: 'app/templates/search.html',
             controller: 'searchController',

@@ -54,6 +54,11 @@ class Spotify {
 		$this->returnResults($artists);
 	}
 
+	public function getNewReleases($country) {
+		$releases = $this->api->getNewReleases(['country' => $country,'limit' => 50]);
+		$this->returnResults($releases);
+	}
+
 	public function getTopTracks() {
 		$tracks = $this->api->getUserPlaylistTracks('spotifycharts', '37i9dQZEVXbMDoHDwVN2tF');
 		$t = new \database\Tracks($this->db);

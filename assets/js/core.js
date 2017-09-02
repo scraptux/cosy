@@ -4,8 +4,6 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
-var time_update_interval;
-var service;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
@@ -28,6 +26,8 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+var time_update_interval;
+var service;
 function onPlayerStateChange(state) {
     switch(state.data) {
         case 1: // playing
@@ -49,12 +49,13 @@ function onPlayerStateChange(state) {
         case 2: // paused
         case -1: // not started
         case 3: // buffering
-        case 5: // positioned
             clearInterval(time_update_interval);
             $('.toggle-play').html('play_arrow');
             $('.track.playing > .image > .indicator').html('play_arrow');
             service.playing.playing = false;
             $('body').scope().$apply();
+            break;
+        case 5: // positioned
             break;
     }
 }

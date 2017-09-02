@@ -129,6 +129,7 @@ a {
     text-decoration: none;
 	color: #eceff1;
 	outline: 0;
+	cursor: pointer;
 }
 
 button {
@@ -1461,10 +1462,40 @@ nav > h1 {
 	width: 100px;
 }
 
-button.primary {
-	background-color: #00b0ff;
-	border: none;
-	padding: 5px;
+figure.album {
+	width: calc(20% - 30px);
+    margin: 0;
+    padding: 15px;
+    float: left;
+}
+
+figure.album img {
 	width: 100%;
-	border-radius: 5px;
+}
+
+figure.album > figcaption {
+    white-space: nowrap;
+    padding: 8px;
+    text-align: center;
+    font-size: .9rem;
+    height: 40px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background-color: #37474f;
+}
+
+figure.album > figcaption > a {
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+figure.album > figcaption > .artist-name {
+	color: #B0BEC5;
 }

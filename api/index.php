@@ -57,6 +57,14 @@ switch ($request->getMethod()) {
 				$db->initSpotify();
 				$db->spotify->getArtistRelatedArtists($_GET['id']);
 				break;
+			case 'newReleases':
+				$db->initSpotify();
+				if (isset($_GET['country'])) {
+					$db->spotify->getNewReleases($_GET['country']);
+				} else {
+					$db->spotify->getNewReleases('us');
+				}
+				break;
 			case 'search':
 				if (!isset($_GET['p'])) {
 					$response->badRequest("Missing searchQuery[p]");

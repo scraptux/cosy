@@ -44,6 +44,11 @@ angular.module('app').controller('artistController', ['$scope', 'artist', 'album
     $scope.albums = albums.items;
 }]);
 
+angular.module('app').controller('newReleasesController', ['$scope', 'results', function($scope, results) {
+    $('.main-menu .menu-item#new-releases').addClass('active');
+    $scope.albums = results.albums;
+}]);
+
 angular.module('app').controller('searchController', ['$scope', 'results', '$routeParams', function($scope, results, $routeParams) {
     $scope.tracks = results.tracks.items;
     $scope.artists = results.artists.items;
@@ -63,7 +68,7 @@ angular.module('app').controller('searchController', ['$scope', 'results', '$rou
 }]);
 
 angular.module('app').controller('top50Controller', ['$scope', 'list', function($scope, list) {
-    $('.main-menu .menu-item#top-50').toggleClass('active');
+    $('.main-menu .menu-item#top-50').addClass('active');
     $scope.tracks = list.items;
 
     for (var i = 0; i < $scope.tracks.length; i++) {

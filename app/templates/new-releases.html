@@ -1,0 +1,22 @@
+<div id="album-page">
+	<div class="filter-bar">
+        <div class="sort">New Releases</div>
+        <div class="filter">
+            <input ng-change="filter(parm)" ng-model="parm" placeholder="Filter..." type="text">
+            <i class="material-icons md-light md-18">search</i>
+        </div>
+    </div>
+    <section class="albums">
+    	<figure class="album" ng-repeat="album in albums.items">
+    		<div class="image">
+    			<a ng-href="#!/album/{{album.id}}">
+    				<img ng-src="{{album.images[0].url}}" src="assets/img/album-no-image.png">
+    			</a>
+    		</div>
+    		<figcaption>
+    			<a class="album-name" ng-href="#!/album/{{album.id}}">{{album.name}}</a>
+    			<a class="artist-name" ng-href="#!/artist/{{album.artists[0].id}}">{{album.artists[0].name}}</a>
+    		</figcaption>
+    	</figure>
+    </section>
+</div>
