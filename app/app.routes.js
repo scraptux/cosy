@@ -110,6 +110,9 @@ angular.module('app').config(function($routeProvider) {
                 }
             }
         })
+        .when('/401', {
+            templateUrl: 'app/templates/401.html'
+        })
 		.otherwise({
 			redirectTo: '/home'
 		});
