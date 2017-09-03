@@ -139,6 +139,8 @@ angular.module("app").service("playerService", [function () {
 
 angular.module("app").service("authService", ['$window', function ($window) {
     this.user;
+    this.playlists;
+    this.currentList;
 
     this.getUser = function () {
         if (!$.isEmptyObject(this.user)) {
@@ -164,5 +166,30 @@ angular.module("app").service("authService", ['$window', function ($window) {
             return true;
         }
         return false;
+    }
+
+    this.getPlaylists = function () {
+        if ($.isEmptyObject(this.playlists) && !$.isEmptyObject(this.user)) {
+            this.playlists = $.ajax({
+                type:"POST",
+                url:"api/",
+                data:{
+                    'q':'getPlaylists',
+                    'token':localStorage.getItem("token")
+                },
+                success: function(response) {
+                    return response;
+                },
+                error: function() {
+                    this.playlists = null;
+                },
+                async: false
+            }).responseJSON;
+        }
+        return this.playlists;
+    }
+
+    this.list = function (id) {
+        $window.location.href = '#!/playlist/'+id;
     }
 }]);

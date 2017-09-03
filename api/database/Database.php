@@ -49,6 +49,8 @@ class Database {
 			( `id` INT NOT NULL AUTO_INCREMENT , `ownerId` INT NOT NULL , `name` TEXT NOT NULL , `private` BOOLEAN NOT NULL DEFAULT TRUE , PRIMARY KEY (`id`)) ENGINE = InnoDB");
 		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`playlistSongs` 
 			( `playlistId` INT NOT NULL , `songId` TEXT NOT NULL , `pos` INT NOT NULL ) ENGINE = InnoDB");
+		$this->conn->query("CREATE TABLE IF NOT EXISTS `cosy`.`playlistFollower` 
+			( `playlistId` INT NOT NULL , `userId` INT NOT NULL ) ENGINE = InnoDB");
 	}
 }
 ?>

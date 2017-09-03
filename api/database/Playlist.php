@@ -52,6 +52,9 @@ class Playlist {
 			(`id`, `ownerId`, `name`, `private`) VALUES 
 			(NULL, '1', '".$name."', '1')");
 		$playlistId = $this->db->conn->insert_id;
+		$this->db->conn->query("INSERT INTO `playlistFollower` 
+			(`playlistId`, `userId`) VALUES 
+			('".$playlistId."', '".$userId."')");
 
 		$this->db->response->setStatusCode(\enum\StatusCodes::CREATED);
 		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);
@@ -89,6 +92,25 @@ class Playlist {
 			array_push($sorted, $track['id']);
 		}
 		$this->db->spotify->getTracks($sorted);
+	}
+
+	public function getPlaylists() {
+		$userId = $this->db->user->token2userId();
+		$stmt = $this->db->conn->prepare("SELECT name, id FROM `playlistFollower` 
+			INNER JOIN `playlists` ON `playlists`.id = `playlistFollower`.playlistId 
+			WHERE `playlistFollower`.userId = '".$userId."'");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($name, $id);
+		$lists = [];
+		while ($stmt->fetch()) {
+			array_push($lists, array('id' => $id, 'name' => $name));
+		}
+
+		$this->db->response->setStatusCode(\enum\StatusCodes::OK);
+		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);
+		$this->db->response->setBody(json_encode($lists));
+		echo $this->db->response->returnResponse();
 	}
 
 	public function getPlaylistInfo() {

@@ -35,6 +35,7 @@ angular.module('app').controller('appController', ['$scope', 'playerService', 'a
     $scope.logout = function() {
         localStorage.removeItem("token");
         authService.user = null;
+        authService.playlists = null;
     }
 
     $scope.saveToPlaylist = function() {
@@ -75,6 +76,7 @@ angular.module('app').controller('appController', ['$scope', 'playerService', 'a
                 },
                 async: false
             });
+        authService.playlists = null;
     }
 }]);
 
@@ -123,10 +125,10 @@ angular.module('app').controller('newReleasesController', ['$scope', 'results', 
     $scope.albums = results.albums;
 }]);
 
-angular.module('app').controller('playlistController', ['$scope', 'tracks', 'info', function($scope, tracks, info) {
-    console.log(tracks.tracks);
+angular.module('app').controller('playlistController', ['$scope', 'tracks', 'info', 'authService', function($scope, tracks, info, authService) {
     $scope.tracks = tracks.tracks;
     $scope.info = info;
+    authService.currentList = info.id;
 
     for (var i = 0; i < $scope.tracks.length; i++) {
         $scope.tracks[i].rank = i+1;

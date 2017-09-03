@@ -12,7 +12,7 @@ angular.module('app').directive('ngEnter', function () {
         });
     };
 })
-.run(function ($rootScope, $location, $route, playerService) {
+.run(function ($rootScope, $location, $route, playerService, authService) {
     $rootScope.config = {};
     $rootScope.config.app_url = $location.url();
     $rootScope.config.app_path = $location.path();
@@ -21,6 +21,7 @@ angular.module('app').directive('ngEnter', function () {
 
     $rootScope.$on('$routeChangeStart', function () {
         $('.main-menu .menu-item.active').removeClass('active');
+        authService.currentList = null;
         $('#loading').show();
         $('ng-view').hide();
         $('.middle-view').scrollTop(0);

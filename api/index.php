@@ -101,6 +101,10 @@ switch ($request->getMethod()) {
 				$db->initUser();
 				$db->user->create($_REQUEST['firstname'], $_REQUEST['lastname'], $_REQUEST['email'], $_REQUEST['password']);
 				break;
+			case 'getPlaylists':
+				$db->initPlaylist();
+				$db->playlist->getPlaylists();
+				break;
 			case 'getPlaylistInfo':
 				$db->initPlaylist();
 				$db->playlist->getPlaylistInfo();

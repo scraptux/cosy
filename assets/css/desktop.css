@@ -252,6 +252,7 @@ button {
 #left-panel .playlists .menu-item i {
 	margin-right: 5px;
 	float: left;
+    margin-top: -2px;
 }
 
 #left-panel .main-menu .main-item #text {
@@ -368,7 +369,7 @@ button {
     float: right;
     cursor: pointer;
     position: relative;
-    bottom: 1px;
+    bottom: 3px;
 }
 
 .current-user {
@@ -402,6 +403,10 @@ button {
 	padding-top: 10px;
 	float: right;
 	cursor: pointer;
+}
+
+.current-user > .logout > i {
+	margin-top: 2px;
 }
 
 .middle-view {
