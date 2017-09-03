@@ -68,7 +68,7 @@ angular.module('app').config(function($routeProvider) {
                     }, function(data) {
                         return data;
                     }).fail(function() {
-                        redirectTo: '/401'
+                        window.location.href = "#!/401";
                     });
                 },
                 info: function($http, $route) {
@@ -79,10 +79,14 @@ angular.module('app').config(function($routeProvider) {
                     }, function(data) {
                         return data;
                     }).fail(function() {
-                        redirectTo: '/401'
+                        window.location.href = "#!/401";
                     });
                 }
             }
+        })
+        .when('/register', {
+            templateUrl: 'app/templates/register.html',
+            controller: 'registerController'
         })
         .when('/search/:query', {
             templateUrl: 'app/templates/search.html',

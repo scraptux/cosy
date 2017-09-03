@@ -143,6 +143,77 @@ angular.module('app').controller('playlistController', ['$scope', 'tracks', 'inf
     }
 }]);
 
+angular.module('app').controller('registerController', ['$scope', '$window', function($scope, $window) {
+    $scope.firstName = "";
+    $scope.lastName = "";
+    $scope.email = "";
+    $scope.pass = "";
+    $scope.passConf = "";
+
+    if (localStorage.getItem("token") !== null) {
+        $window.location.href = "#!/";
+    }
+
+    $scope.register = function() {
+        if ($scope.checkName($scope.firstName) &&
+            $scope.checkName($scope.lastName) &&
+            $scope.checkMail($scope.email) &&
+            $scope.checkPass($scope.pass) &&
+            $scope.confirmPass($scope.passConf)) {
+
+            $.post("api/", {
+                'q':'createUser',
+                'firstname':$scope.firstName,
+                'lastname':$scope.lastName,
+                'email':$scope.email,
+                'password':$scope.pass
+            }, function(data) {
+                $window.location.href = "#!/login";
+            }).fail(function(response) {
+                $('#login-page .form .info').text(response.responseText);
+            });
+        }
+    }
+    $scope.checkName = function(name) {
+        var re = /^[A-Za-z ]+$/;
+        if (re.test(name) && name.length > 0) {
+            $('#login-page .form .info').text("");
+            return true;
+        } else {
+            $('#login-page .form .info').text("A name must only contain letters!");
+            return false;
+        }
+    }
+    $scope.checkMail = function(mail) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(mail) && mail.length > 0) {
+            $('#login-page .form .info').text("");
+            return true;
+        } else {
+            $('#login-page .form .info').text("The email you entered is invalid!");
+            return false;
+        }
+    }
+    $scope.checkPass = function(pass) {
+        if (pass.length >= 8) {
+            $('#login-page .form .info').text("");
+            return true;
+        } else {
+            $('#login-page .form .info').text("Your password must contain at least 8 letters!");
+            return false;
+        }
+    }
+    $scope.confirmPass = function(pass) {
+        if (pass == $scope.pass) {
+            $('#login-page .form .info').text("");
+            return true;
+        } else {
+            $('#login-page .form .info').text("Passwords do not match!");
+            return false;
+        }
+    }
+}]);
+
 angular.module('app').controller('searchController', ['$scope', 'results', '$routeParams', function($scope, results, $routeParams) {
     $scope.tracks = results.tracks.items;
     $scope.artists = results.artists.items;
