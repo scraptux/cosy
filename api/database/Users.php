@@ -106,7 +106,7 @@ class Users {
 		$stmt->bind_result($token);
 		$stmt->fetch();
 		if ($stmt->num_rows <= 0) {
-			$token = bin2hex(random_bytes(16));
+			$token = bin2hex(openssl_random_pseudo_bytes(16));
 			$this->db->conn->query("INSERT INTO `authTokens` 
 				(`userId`, `token`) VALUES ('".$userId."', '".$token."')");
 		}
