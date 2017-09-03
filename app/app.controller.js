@@ -123,6 +123,24 @@ angular.module('app').controller('newReleasesController', ['$scope', 'results', 
     $scope.albums = results.albums;
 }]);
 
+angular.module('app').controller('playlistController', ['$scope', 'tracks', 'info', function($scope, tracks, info) {
+    console.log(tracks.tracks);
+    $scope.tracks = tracks.tracks;
+    $scope.info = info;
+
+    for (var i = 0; i < $scope.tracks.length; i++) {
+        $scope.tracks[i].rank = i+1;
+    }
+
+    $scope.totalDuration = function() {
+        var length_ms = 0;
+        for (var i = 0; i < $scope.tracks.length; i++) {
+            length_ms += $scope.tracks[i].duration_ms;
+        }
+        return length_ms;
+    }
+}]);
+
 angular.module('app').controller('searchController', ['$scope', 'results', '$routeParams', function($scope, results, $routeParams) {
     $scope.tracks = results.tracks.items;
     $scope.artists = results.artists.items;

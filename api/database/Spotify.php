@@ -72,7 +72,7 @@ class Spotify {
 		$tracks = $this->api->getTracks($arr);
 		$t = new \database\Tracks($this->db);
 		foreach ($tracks->tracks as $track) {
-			$t->getTrack($track->track);
+			$t->getTrack($track);
 		}
 		$this->returnResults($tracks);
 	}

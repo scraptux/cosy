@@ -64,6 +64,15 @@ class Playlist {
 		if (!isset($_REQUEST['playlistId'])) {
 			$this->db->response->badRequest("No playlistId specified");
 		}
+		$stmt = $this->db->conn->prepare("SELECT private, ownerId FROM `playlists` WHERE `playlists`.id = '".$_REQUEST['playlistId']."' LIMIT 1");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($isPrivate, $ownerId);
+		$stmt->fetch();
+		if ($isPrivate && $ownerId != $userId) {
+			$this->db->response->unauthorized("This is a private playlist");
+		}
+
 		$this->db->initSpotify();
 
 		$stmt = $this->db->conn->prepare("SELECT songId, pos FROM `playlistSongs` WHERE `playlistSongs`.playlistId = '".$_REQUEST['playlistId']."'");
@@ -80,6 +89,32 @@ class Playlist {
 			array_push($sorted, $track['id']);
 		}
 		$this->db->spotify->getTracks($sorted);
+	}
+
+	public function getPlaylistInfo() {
+		$userId = $this->db->user->token2userId();
+		if (!isset($_REQUEST['playlistId'])) {
+			$this->db->response->badRequest("No playlistId specified");
+		}
+		$stmt = $this->db->conn->prepare("SELECT name, ownerId, firstname, lastname, private FROM `playlists` 
+			INNER JOIN `users` ON `users`.id = `playlists`.ownerId
+			WHERE `playlists`.id = '".$_REQUEST['playlistId']."' LIMIT 1");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($name, $ownerId, $firstname, $lastname, $isPrivate);
+		$stmt->fetch();
+		if ($isPrivate && $ownerId != $userId) {
+			$this->db->response->unauthorized("This is a private playlist");
+		}
+
+		$this->db->response->setStatusCode(\enum\StatusCodes::OK);
+		$this->db->response->registerHeader(\enum\HeaderFields::CONTENT_TYPE, \enum\HeaderFields::JSON);
+		$this->db->response->setBody(json_encode(array('id' => $_REQUEST['playlistId'],
+			'name' => $name,
+			'ownerId' => $ownerId,
+			'firstname' => $firstname,
+			'lastname' => $lastname)));
+		echo $this->db->response->returnResponse();
 	}
 
 	private function comparePos($a, $b) {

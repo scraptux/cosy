@@ -56,6 +56,34 @@ angular.module('app').config(function($routeProvider) {
                 }
             }
         })
+        .when('/playlist/:id', {
+            templateUrl: 'app/templates/playlist.html',
+            controller: 'playlistController',
+            resolve: {
+                tracks: function($http, $route) {
+                    return $.post('api/', {
+                        'q':'getPlaylistTracks',
+                        'token':localStorage.getItem("token"),
+                        'playlistId':$route.current.params.id
+                    }, function(data) {
+                        return data;
+                    }).fail(function() {
+                        redirectTo: '/401'
+                    });
+                },
+                info: function($http, $route) {
+                    return $.post('api/', {
+                        'q':'getPlaylistInfo',
+                        'token':localStorage.getItem("token"),
+                        'playlistId':$route.current.params.id
+                    }, function(data) {
+                        return data;
+                    }).fail(function() {
+                        redirectTo: '/401'
+                    });
+                }
+            }
+        })
         .when('/search/:query', {
             templateUrl: 'app/templates/search.html',
             controller: 'searchController',
